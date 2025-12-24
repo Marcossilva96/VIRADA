@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VIRADA</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f172a"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #020617;
+      color: #e5e7eb;
+    }
+    header {
+      padding: 16px;
+      text-align: center;
+      background: #020617;
+      border-bottom: 1px solid #1e293b;
+    }
+    h1 { margin: 0; }
+    .container { padding: 16px; }
+    .card {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #7c2d12;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    .xp { color: #22c55e; }
+    .dark { font-style: italic; color: #94a3b8; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>VIRADA</h1>
+  <p class="dark">O sistema observa.</p>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <strong>Jogador:</strong> Marcos Silva<br>
+    <strong>Nível:</strong> <span id="nivel">1</span><br>
+    <strong>XP:</strong> <span id="xp">0</span>
+  </div>
+
+  <div class="card">
+    <p>Missão Diária</p>
+    <p class="dark">Caminhar 10 minutos</p>
+    <button onclick="completar()">Concluir Missão</button>
+  </div>
+
+</div>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js');
+  }
+
+  let xp = localStorage.getItem('xp') || 0;
+  let nivel = localStorage.getItem('nivel') || 1;
+
+  document.getElementById('xp').innerText = xp;
+  document.getElementById('nivel').innerText = nivel;
+
+  function completar() {
+    xp = parseInt(xp) + 20;
+    if (xp >= nivel * 100) {
+      xp = 0;
+      nivel++;
+      alert("O sistema reconheceu sua evolução.");
+    }
+    localStorage.setItem('xp', xp);
+    localStorage.setItem('nivel', nivel);
+    document.getElementById('xp').innerText = xp;
+    document.getElementById('nivel').innerText = nivel;
+  }
+</script>
+
+</body>
+</html>
